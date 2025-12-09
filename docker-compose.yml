@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  php:
+    image: thecodingmachine/php:8.2-v5-slim-apache
+    container_name: school_portal_php
+    ports:
+      - "80:80"
+    environment:
+      PHP_EXTENSIONS: "mysqli gd intl zip"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: school_portal_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: school_portal
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
